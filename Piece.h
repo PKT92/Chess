@@ -7,9 +7,18 @@ public:
     Piece();
     Piece(bool start_color, int piece_type, Tile *tile_num);
     ~Piece();
-    void move_piece(Tile *x);
+    void set_piece_status(bool status);
+    bool pawn_check(Tile *tile);
+    bool bishop_check(Tile *tile, int old_col, int new_col, int old_row, int new_row);
+    bool knight_check(Tile *tile, int old_col, int new_col, int old_row, int new_row);
+    bool rook_check(Tile *tile, int old_col, int new_col, int old_row, int new_row);
+    bool move_piece(Tile *x, int old_col, int new_col, int old_row, int new_row);
     int get_piece();
+    bool move_check(Tile *new_tile, int old_col, int new_col, int old_row, int new_row);
+    bool get_color();
 private:
+    bool first_move = true;
+    bool enpassant = false;
     int piece; // 0 pawn, 1 knight, 2 bishop, 3 rook, 4 queen, 5 king
     int value; // 100 pawn, 300 bishop, 300 knight, 500 rook, 1000 queen, 5000 king
     bool alive; // 1 alive, 0 dead
