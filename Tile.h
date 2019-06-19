@@ -11,6 +11,7 @@ public:
     void set_piece(Piece *piece_type);
     void remove_piece();
     Piece* get_piece();
+    int get_tile();
 private:
     int tile_number;
     Piece *piece;

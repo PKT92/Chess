@@ -24,3 +24,7 @@ void Tile::remove_piece(){
 Piece* Tile::get_piece(){
     return piece;
 }
+
+int Tile::get_tile(){
+    return tile_number;
+}
