@@ -8,6 +8,9 @@ Board::Board()
     for(int i = 0; i < 64; i++){
         tiles.push_back(new Tile(i));
     }
+    // Kings
+    pieces.push_back(new Piece(0, 5, tiles[60]));
+    pieces.push_back(new Piece(1, 5, tiles[4]));
     // Black Pawns
     for(int i = 0; i < 8; i++){
         pieces.push_back(new Piece(1, 0, tiles[i+8]));
@@ -21,7 +24,6 @@ Board::Board()
     pieces.push_back(new Piece(1, 1, tiles[1]));
     pieces.push_back(new Piece(1, 2, tiles[2]));
     pieces.push_back(new Piece(1, 4, tiles[3]));
-    pieces.push_back(new Piece(1, 5, tiles[4]));
     pieces.push_back(new Piece(1, 2, tiles[5]));
     pieces.push_back(new Piece(1, 1, tiles[6]));
     pieces.push_back(new Piece(1, 3, tiles[7]));
@@ -30,7 +32,6 @@ Board::Board()
     pieces.push_back(new Piece(0, 1, tiles[57]));
     pieces.push_back(new Piece(0, 2, tiles[58]));
     pieces.push_back(new Piece(0, 4, tiles[59]));
-    pieces.push_back(new Piece(0, 5, tiles[60]));
     pieces.push_back(new Piece(0, 2, tiles[61]));
     pieces.push_back(new Piece(0, 1, tiles[62]));
     pieces.push_back(new Piece(0, 3, tiles[63]));
@@ -39,7 +40,7 @@ Board::Board()
 void Board::print_board(){
     int labelCount = 0, tileCount = 0;
     int numCount = 7;
-    std::cout << "----------------------------- Black -----------------------------" << std::endl;
+    std::cout << "------------------------------ Black ------------------------------" << std::endl;
     for(int i = 0; i < 34; i++){
         for(int j = 0; j < 34; j++){
             if(i == 0){
@@ -87,7 +88,7 @@ void Board::print_board(){
         }
         std::cout << std::endl;
     }
-    std::cout << "----------------------------- White -----------------------------" << std::endl;
+    std::cout << "------------------------------ White ------------------------------" << std::endl;
 }
 
 bool Board::get_game_status(){
@@ -95,7 +96,7 @@ bool Board::get_game_status(){
 }
 
 // TODO:
-// Get movement of pieces right (currently the boards backwards)
+//   Get movement of pieces right (currently the board's backwards a7 is actually a2)
 bool Board::move_piece(std::string old_pos, std::string new_pos, int color){
     if(old_pos.length() != 2 || new_pos.length() != 2){
         return false;
@@ -103,14 +104,12 @@ bool Board::move_piece(std::string old_pos, std::string new_pos, int color){
     int old_int, new_int;
     int old_char, new_char;
     int old_tile, new_tile;
-    std::cout << isdigit(old_pos[0]) << std::endl;
     if(isdigit(old_pos[0])){
         old_int = int(old_pos[0]) - 48 - 1;
         old_char = int(old_pos[1]) - 97;
     } else{
         old_char = int(old_pos[0]) - 97;
         old_int = int(old_pos[1]) - 48 - 1;
-        std::cout << old_char << old_int << std::endl;
     }
     if(isdigit(new_pos[0])){
         new_int = int(new_pos[0]) - 48 - 1;
@@ -118,11 +117,12 @@ bool Board::move_piece(std::string old_pos, std::string new_pos, int color){
     } else{
         new_char = int(new_pos[0]) - 97;
         new_int = int(new_pos[1]) - 48 - 1;
-        std::cout << new_char << new_int << std::endl;
     }
-    old_tile = ((old_int*8 - 8)%8) + old_char;
-    new_tile = ((new_int*8 - 8)%8) + new_char;
-    std::cout << old_tile << new_tile << std::endl;
-    tiles[old_tile]->get_piece()->move_piece(tiles[new_tile]);
-    return true;
+    old_tile = (old_int * 8) + old_char;
+    new_tile = (new_int*8) + new_char;
+    // std::cout << old_tile << new_tile << std::endl;
+    if(tiles[old_tile]->get_piece()->move_piece(tiles[new_tile], old_char, old_int, new_char, new_int)){
+        return true;
+    }
+    return false;
 }
