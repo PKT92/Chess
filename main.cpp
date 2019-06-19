@@ -10,14 +10,20 @@ int main(int argc, char *argv[]){
     string old_pos, new_pos;
     while(b->get_game_status()){
         b->print_board();
-        if(count % 2 == 0){
+        int color = count%2;
+        if(color == 0){
             cout << "White to move." << endl;
         } else{
             cout << "Black to move." << endl;
         }
         cout << "Please enter next move: ";
         cin >> old_pos >> new_pos;
-        count++;
+        if(!b->move_piece(old_pos, new_pos, color)){
+            cout << "Invalid move." << endl;
+        } else{
+            cout << "This happens" << endl;
+            count++;
+        }
     }
     return 0;
 }
