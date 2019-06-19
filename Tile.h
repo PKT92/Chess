@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Piece.h"
-
+class Piece;
 class Tile{
 public:
     Tile();
@@ -10,7 +10,7 @@ public:
     ~Tile();
     void set_piece(Piece *piece_type);
     void remove_piece();
-    int get_piece();
+    Piece* get_piece();
 private:
     int tile_number;
     Piece *piece;

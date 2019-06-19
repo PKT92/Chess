@@ -21,9 +21,6 @@ void Tile::remove_piece(){
     piece = nullptr;
 }
 
-int Tile::get_piece(){
-    if(piece == nullptr){
-        return -1;
-    }
-    return piece->get_piece();
+Piece* Tile::get_piece(){
+    return piece;
 }
