@@ -21,7 +21,6 @@ int main(int argc, char *argv[]){
         if(!b->move_piece(old_pos, new_pos, color)){
             cout << "Invalid move." << endl;
         } else{
-            cout << "This happens" << endl;
             count++;
         }
     }
