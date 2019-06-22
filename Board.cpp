@@ -98,6 +98,7 @@ bool Board::get_game_status(){
 // TODO:
 //   Get movement of pieces right (currently the board's backwards a7 is actually a2)
 bool Board::move_piece(std::string old_pos, std::string new_pos, int color){
+    int swapped[] = {7, 6, 5, 4, 3, 2, 1, 0};
     if(old_pos.length() != 2 || new_pos.length() != 2){
         return false;
     }
@@ -106,22 +107,22 @@ bool Board::move_piece(std::string old_pos, std::string new_pos, int color){
     int old_tile, new_tile;
     if(isdigit(old_pos[0])){
         old_int = int(old_pos[0]) - 48 - 1;
-        old_char = int(old_pos[1]) - 97;
+        old_char = int(tolower(old_pos[1])) - 97;
     } else{
-        old_char = int(old_pos[0]) - 97;
+        old_char = int(tolower(old_pos[0])) - 97;
         old_int = int(old_pos[1]) - 48 - 1;
     }
     if(isdigit(new_pos[0])){
         new_int = int(new_pos[0]) - 48 - 1;
-        new_char = int(new_pos[1]) - 97;
+        new_char = int(tolower(new_pos[1])) - 97;
     } else{
-        new_char = int(new_pos[0]) - 97;
+        new_char = int(tolower(new_pos[0])) - 97;
         new_int = int(new_pos[1]) - 48 - 1;
     }
-    old_tile = (old_int * 8) + old_char;
-    new_tile = (new_int*8) + new_char;
-    // std::cout << old_tile << new_tile << std::endl;
-    if(tiles[old_tile]->get_piece()->move_piece(tiles[new_tile], old_char, old_int, new_char, new_int)){
+    old_int = swapped[old_int];
+    new_int = swapped[new_int];
+    old_tile = (old_int*8) + old_char;
+    if(tiles[old_tile]->get_piece()->move_piece(tiles, old_char, old_int, new_char, new_int, color)){
         return true;
     }
     return false;
