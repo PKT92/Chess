@@ -62,20 +62,47 @@ void Board::print_board(){
             } else if (i% 4 == 1){
                 std::cout << "# ";
             } else if(i % 4 == 3 && j % 4 == 3){
-                int tmp_piece;
-                if(tiles[tileCount]->get_piece() == nullptr){
-                    tmp_piece = -1;
+                Piece *tmp_piece = tiles[tileCount]->get_piece();
+                if(tmp_piece != nullptr){
+                    if(tmp_piece->get_piece() == 0){
+                        if(tmp_piece->get_color() == 0){
+                            std::cout << "WP";
+                        } else{
+                            std::cout << "BP";
+                        }
+                    } else if(tmp_piece->get_piece() == 1){
+                        if(tmp_piece->get_color() == 0){
+                            std::cout << "WN";
+                        } else{
+                            std::cout << "BN";
+                        }
+                    } else if(tmp_piece->get_piece() == 2){
+                        if(tmp_piece->get_color() == 0){
+                            std::cout << "WB";
+                        } else{
+                            std::cout << "BB";
+                        }
+                    } else if(tmp_piece->get_piece() == 3){
+                        if(tmp_piece->get_color() == 0){
+                            std::cout << "WR";
+                        } else{
+                            std::cout << "BR";
+                        }
+                    } else if(tmp_piece->get_piece() == 4){
+                        if(tmp_piece->get_color() == 0){
+                            std::cout << "WQ";
+                        } else{
+                            std::cout << "BQ";
+                        }
+                    } else if(tmp_piece->get_piece() == 5){
+                        if(tmp_piece->get_color() == 0){
+                            std::cout << "WK";
+                        } else{
+                            std::cout << "BK";
+                        }
+                    }
                 } else{
-                    tmp_piece = tiles[tileCount]->get_piece()->get_piece();
-                }
-                switch(tmp_piece){
-                    case 0: std::cout << "P "; break;
-                    case 1: std::cout << "N "; break;
-                    case 2: std::cout << "B "; break;
-                    case 3: std::cout << "R "; break;
-                    case 4: std::cout << "Q "; break;
-                    case 5: std::cout << "K "; break;
-                    default: std::cout << "  ";
+                    std::cout << "  ";
                 }
                 if(tileCount == tiles.size()-1){
                     tileCount = 0;
@@ -95,8 +122,6 @@ bool Board::get_game_status(){
     return game_status;
 }
 
-// TODO:
-//   Get movement of pieces right (currently the board's backwards a7 is actually a2)
 bool Board::move_piece(std::string old_pos, std::string new_pos, int color){
     int swapped[] = {7, 6, 5, 4, 3, 2, 1, 0};
     if(old_pos.length() != 2 || new_pos.length() != 2){
