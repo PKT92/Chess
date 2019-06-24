@@ -24,7 +24,6 @@ bool Piece::is_enpassant(){
 }
 
 bool Piece::pawn_check(Tile *new_tile, std::vector<Tile*> tiles){
-    std::cout << "This happened here" << std::endl;
     int next_tile = new_tile->get_tile();
     if(new_tile->get_piece() == nullptr){
         if(first_move){
@@ -77,7 +76,6 @@ bool Piece::pawn_check(Tile *new_tile, std::vector<Tile*> tiles){
 }
 
 bool Piece::knight_check(Tile *new_tile, int old_col, int new_col, int old_row, int new_row){
-    std::cout << old_col << new_col << old_row << new_row << std::endl;
     if(abs(old_col - new_col) == 2){
         if(abs(old_row - new_row) == 1){
             return true;
@@ -125,7 +123,6 @@ bool Piece::move_check(std::vector<Tile*> tiles, Tile *new_tile,  int old_col, i
 bool Piece::move_piece(std::vector<Tile*> tiles, int old_col, int old_row, int new_col, int new_row, int moving_color){
     int swapped[] = {7, 6, 5, 4, 3, 2, 1, 0};
     int new_tile;
-    std::cout << moving_color << " " << color << std::endl;
     new_tile = (new_row*8) + new_col;
     Tile *x = tiles[new_tile];
     if(x->get_piece() != nullptr){
